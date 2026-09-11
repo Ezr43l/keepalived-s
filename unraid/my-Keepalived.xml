@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!-- Plantilla publica generica. No contiene topologia ni secretos. -->
+<Container version="2">
+  <Name>Keepalived</Name>
+  <Repository>ghcr.io/ezr43l/keepalived-s:1.0.6</Repository>
+  <Registry>https://github.com/Ezr43l/keepalived-s/pkgs/container/keepalived-s</Registry>
+  <Network>host</Network>
+  <MyIP/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/Ezr43l/keepalived-s/issues</Support>
+  <Project>https://github.com/Ezr43l/keepalived-s</Project>
+  <Overview>Sostiene direcciones IPv4 flotantes mediante VRRP y comprueba la salud real de cada servicio en cada nodo. Tras el primer arranque, el asistente web solicita la topologia y genera los secretos dentro del volumen persistente. El panel incluye cuentas, roles, 2FA y claves API revocables. Toda la aplicacion se ejecuta en este unico contenedor.</Overview>
+  <Category>Network:Management Tools:</Category>
+  <WebUI>http://[IP]:6060/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/Ezr43l/keepalived-s/main/unraid/my-Keepalived.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/Ezr43l/keepalived-s/main/logo/icono.png</Icon>
+  <ExtraParams>--restart=unless-stopped --init --read-only --cap-drop=ALL --cap-add=NET_ADMIN --cap-add=NET_BROADCAST --cap-add=NET_RAW --cap-add=SETGID --security-opt=no-new-privileges --pids-limit=256 --tmpfs /run:rw,nosuid,noexec,size=32m --tmpfs /tmp:rw,nosuid,noexec,size=32m</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+  <Config Name="Puerto del panel" Target="FIP_PUERTO" Default="6060" Description="Puerto del panel y la API. Con red host se escucha directamente en este puerto." Type="Variable" Display="always" Required="true" Mask="false">6060</Config>
+  <Config Name="Datos persistentes" Target="/datos" Default="/mnt/user/appdata/keepalived" Mode="rw" Description="Configuracion de la app, secretos, pool, acceso y configuracion VRRP. Protege este volumen como informacion sensible." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/keepalived</Config>
+</Container>

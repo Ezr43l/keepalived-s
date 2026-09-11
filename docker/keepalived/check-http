@@ -1,0 +1,28 @@
+#!/bin/sh
+# Sano = EL SERVICIO responde en este nodo, no solo que la maquina este viva.
+# Un servidor encendido con la aplicacion caida debe ceder la direccion; ese es
+# el fallo clasico de este montaje.
+#
+# Recibe el NOMBRE del servicio y la URL completa. El nombre hace falta para el
+# drenaje; la URL, porque esta imagen no sabe que aplicaciones existen ni en que
+# ruta publican su salud. Quien declara la direccion declara tambien como se
+# comprueba (ver el manifiesto).
+#
+# Conviven varios servicios por nodo, cada uno con su direccion. Sin una URL por
+# instancia, una heredaria la salud de otra, que es exactamente la mentira que
+# este guion existe para evitar.
+SERVICIO="${1:?uso: check-http <servicio> <url>}"
+URL="${2:?uso: check-http <servicio> <url>}"
+
+# DRENAJE: con la marca puesta el chequeo falla A PROPOSITO, keepalived ve el
+# servicio enfermo aqui y cede la direccion a otro nodo. Es como se vacia un
+# servidor antes de un mantenimiento, usando el mecanismo que ya existe: sin
+# regenerar configuracion, sin reiniciar nada y sin perder un paquete.
+#
+# La marca vive en un tmpfs a proposito: no sobrevive a un reinicio del
+# contenedor. Un servidor drenado para siempre porque alguien olvido quitarla
+# seria peor averia que la que se queria evitar.
+DRENAR="${FIP_DRENAR:-/run/floating-ip/drenar}"
+[ -f "$DRENAR/$SERVICIO" ] && exit 1
+
+curl -sf --max-time 3 "$URL" >/dev/null

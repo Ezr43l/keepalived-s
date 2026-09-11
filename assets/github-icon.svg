@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Keepalived</title>
+  <desc id="desc">Dirección flotante moviéndose entre tres nodos</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071015"/><stop offset="1" stop-color="#221837"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8b5cf6"/><stop offset="1" stop-color="#12cddd"/></linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <circle cx="256" cy="158" r="50" fill="#071015" stroke="#12cddd" stroke-width="16"/>
+  <circle cx="154" cy="340" r="50" fill="#071015" stroke="#8b5cf6" stroke-width="16"/>
+  <circle cx="358" cy="340" r="50" fill="#071015" stroke="#8b5cf6" stroke-width="16"/>
+  <path d="M232 201 177 296m103-95 55 95M210 340h96" fill="none" stroke="#62778a" stroke-width="14" stroke-linecap="round"/>
+  <path d="M164 204c45-40 139-45 193 5" fill="none" stroke="url(#accent)" stroke-width="18" stroke-linecap="round"/>
+  <path d="m339 181 24 29-37 10" fill="none" stroke="#55df9a" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="210" y="237" width="92" height="50" rx="25" fill="#ffcf5a"/>
+  <text x="256" y="270" text-anchor="middle" font-family="ui-monospace,monospace" font-size="28" font-weight="700" fill="#071015">VIP</text>
+</svg>

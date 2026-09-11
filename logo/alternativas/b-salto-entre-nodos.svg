@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#12202b"/>
+  <!-- tres servidores apilados -->
+  <rect x="14" y="30" width="36" height="8" rx="2.5" fill="#3d5a6c"/>
+  <rect x="14" y="41" width="36" height="8" rx="2.5" fill="#3d5a6c"/>
+  <rect x="14" y="52" width="36" height="8" rx="2.5" fill="#2c4252"/>
+  <!-- la direccion saltando, con su arco -->
+  <path d="M18 21c5-9 23-9 28 0" stroke="#22d3ee" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="3 4"/>
+  <rect x="24" y="10" width="16" height="16" rx="4" fill="#22d3ee" transform="rotate(45 32 18)"/>
+</svg>

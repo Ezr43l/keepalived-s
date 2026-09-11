@@ -1,0 +1,17 @@
+.git
+.github
+.env
+.env.*
+!.env.example
+.secrets
+secrets
+data
+*.local.sh
+*.log
+*.pem
+*.key
+*_ssh_key
+*_ssh_key.pub
+*token*.txt
+__pycache__
+*.pyc

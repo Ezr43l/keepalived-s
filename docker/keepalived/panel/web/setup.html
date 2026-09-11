@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Configurar Keepalived</title><link rel="stylesheet" href="/estilo.css"></head>
+<body><main class="contenedor"><section class="tarjeta"><h1>Configurar Keepalived</h1>
+<p>La topologÃ­a y los secretos se guardarÃ¡n en el volumen de datos, no en Docker.</p>
+<form id="setup-form">
+<label>Este nodo <input id="local-node" required placeholder="node-a"></label>
+<label>Nodos <textarea id="nodes" rows="7" required placeholder="node-a | 192.0.2.10 | eth0 | 150 | http://192.0.2.10:6060&#10;node-b | 192.0.2.11 | eth0 | 100 | http://192.0.2.11:6060"></textarea></label>
+<div class="rejilla"><label>Prefijo CIDR <input id="prefix" type="number" min="1" max="32" value="24"></label>
+<label>Retardo de retorno <input id="delay" type="number" min="0" max="1000" value="45"></label>
+<label>Horas de sesiÃ³n <input id="hours" type="number" min="1" max="168" value="12"></label>
+<label>Emisor 2FA <input id="issuer" value="Keepalived" required></label></div>
+<label><input id="secure" type="checkbox"> El portal se publicarÃ¡ exclusivamente mediante HTTPS</label>
+<label>CÃ³digo de incorporaciÃ³n <textarea id="enrollment" rows="4" placeholder="VacÃ­o en el primer nodo; obligatorio en los demÃ¡s"></textarea></label>
+<button type="submit">Guardar configuraciÃ³n</button><p id="error" role="alert"></p></form>
+<section id="result" hidden><h2>ConfiguraciÃ³n guardada</h2><p>Guarda este cÃ³digo y Ãºsalo una vez en cada nodo restante.</p><textarea id="code" rows="7" readonly></textarea><p>El contenedor continuarÃ¡ automÃ¡ticamente.</p></section>
+</section></main><script src="/setup.js"></script></body></html>

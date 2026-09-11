@@ -1,0 +1,17 @@
+# Secretos y configuración de cada instalación
+.secrets/
+*.pem
+*_ssh_key
+*_ssh_key.pub
+*token*.txt
+manifiesto.local.sh
+*.local.sh
+.env
+data/
+secrets/
+
+# Ruido local
+*.log
+.DS_Store
+__pycache__/
+*.py[cod]

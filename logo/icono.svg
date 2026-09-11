@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#12202b"/>
+  <!-- el anillo virtual que comparten los nodos -->
+  <circle cx="32" cy="32" r="18" stroke="#3d5a6c" stroke-width="4" fill="none"/>
+  <!-- los tres nodos sobre el anillo -->
+  <circle cx="32" cy="14" r="6" fill="#22d3ee"/>
+  <circle cx="16.4" cy="41" r="6" fill="#3d5a6c"/>
+  <circle cx="47.6" cy="41" r="6" fill="#3d5a6c"/>
+  <!-- la direccion, en el centro -->
+  <rect x="25" y="28" width="14" height="8" rx="2" fill="#e2f5fa"/>
+</svg>

@@ -1,0 +1,50 @@
+services:
+  floating-ip:
+    image: ${FIP_IMAGE_REPOSITORY:-keepalived}:${FIP_APP_VERSION:-1.0.6}
+    build:
+      context: .
+      dockerfile: docker/keepalived/Dockerfile
+      args:
+        FIP_APP_VERSION: ${FIP_APP_VERSION:-1.0.6}
+        SOURCE_URL: ${SOURCE_URL:-https://github.com/Ezr43l/keepalived-s}
+        LICENSE: ${LICENSE_SPDX:-Apache-2.0}
+    container_name: ${FIP_CONTAINER_NAME:-Keepalived}
+    network_mode: host
+    restart: unless-stopped
+    init: true
+    read_only: true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_ADMIN
+      - NET_BROADCAST
+      - NET_RAW
+      # Keepalived llama setgroups(2) antes de ejecutar el health check.
+      - SETGID
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+    tmpfs:
+      - /run:rw,nosuid,noexec,size=32m
+      - /tmp:rw,nosuid,noexec,size=32m
+    volumes:
+      - ${FIP_DATA_DIR:-./data}:/datos
+      - ${FIP_VRRP_AUTH_FILE:-../floating-ip-secrets/keepalived-vrrp.txt}:/run/secrets/fip_vrrp_auth:ro
+      - ${FIP_SESSION_SECRET_FILE:-../floating-ip-secrets/keepalived-session-secret.txt}:/run/secrets/fip_session_secret:ro
+      - ${FIP_CLUSTER_TOKEN_FILE:-../floating-ip-secrets/keepalived-cluster-token.txt}:/run/secrets/fip_cluster_token:ro
+    environment:
+      FIP_APP_VERSION: ${FIP_APP_VERSION:-1.0.6}
+      FIP_NODO: ${FIP_NODO:-}
+      FIP_NODOS: ${FIP_NODOS:-}
+      FIP_PARES: ${FIP_PARES:-}
+      FIP_PUERTO: ${FIP_PUERTO:-6060}
+      FIP_VIP_PREFIX: ${FIP_VIP_PREFIX:-24}
+      FIP_RETARDO: ${FIP_RETARDO:-45}
+      FIP_DATOS: /datos
+      FIP_CONF: /datos/keepalived.conf
+      FIP_VRRP_AUTH_PASS_FILE: /run/secrets/fip_vrrp_auth
+      FIP_SESSION_SECRET_FILE: /run/secrets/fip_session_secret
+      FIP_CLUSTER_TOKEN_FILE: /run/secrets/fip_cluster_token
+      FIP_SESSION_HOURS: ${FIP_SESSION_HOURS:-12}
+      FIP_COOKIE_SECURE: ${FIP_COOKIE_SECURE:-0}
+      FIP_TOTP_ISSUER: ${FIP_TOTP_ISSUER:-Keepalived}

@@ -1,0 +1,7 @@
+# Los guiones de este repo se ejecutan en los Unraid (Linux): unos se copian al
+# /boot de cada nodo y otros van DENTRO de la imagen Docker. Si se clonaran en
+# Windows con finales CRLF, bash moriria alli con errores de «\r» ilegibles — y
+# en el caso de check-http el shebang roto haria que keepalived desactivase el
+# chequeo y un nodo se quedase la direccion sin servir nada. Se fuerza LF
+# siempre, se clone donde se clone.
+* text=auto eol=lf

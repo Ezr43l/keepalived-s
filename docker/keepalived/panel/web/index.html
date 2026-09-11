@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keepalived</title>
+<link rel="icon" href="icono.svg">
+<link rel="alternate icon" href="icono.png">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<main id="vista-acceso" class="vista-acceso login-page">
+  <section class="login-intro" aria-labelledby="marca-acceso-titulo">
+    <img src="icono.svg" alt="">
+    <span class="sobrelinea">ALTA DISPONIBILIDAD &middot; VRRP</span>
+    <h1 id="marca-acceso-titulo">Keepalived.</h1>
+    <p>
+      Controla qu&eacute; nodo sostiene cada servicio y mueve sus direcciones de forma
+      segura durante mantenimientos o incidencias.
+    </p>
+    <div class="login-feature">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 3l7 3v5c0 4.6-2.8 8.1-7 10-4.2-1.9-7-5.4-7-10V6l7-3z"></path>
+        <path d="M8.7 12.1l2.1 2.1 4.7-4.8"></path>
+      </svg>
+      <span>Acceso protegido, segundo factor opcional y API autenticada por aplicaci&oacute;n</span>
+    </div>
+  </section>
+  <section class="login-panel" aria-labelledby="titulo-acceso">
+    <div class="login-form">
+      <div class="login-symbol" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <circle cx="8" cy="15" r="4"></circle>
+          <path d="M11 12l8-8M16 7l3 3M14 9l2 2"></path>
+        </svg>
+      </div>
+      <span class="sobrelinea">ACCESO PRIVADO</span>
+      <h2 id="titulo-acceso">Entrar en Keepalived</h2>
+      <p id="texto-acceso" class="intro-acceso">
+        Identif&iacute;cate para administrar el reparto y el mantenimiento de los nodos.
+      </p>
+      <div id="estado-acceso" class="recado mal oculto" role="status" aria-live="polite"></div>
+      <form id="form-acceso" class="form-acceso" autocomplete="on" novalidate>
+        <label>
+          <span>Usuario</span>
+          <input name="username" autocomplete="username" maxlength="64" autofocus>
+        </label>
+        <label id="campo-nombre-inicial" class="oculto">
+          <span>Nombre visible</span>
+          <input name="display_name" autocomplete="name" maxlength="120">
+        </label>
+        <label>
+          <span>Contrase&ntilde;a</span>
+          <input name="password" type="password" autocomplete="current-password" maxlength="256">
+        </label>
+        <label id="campo-confirmacion-inicial" class="oculto">
+          <span>Repetir contrase&ntilde;a</span>
+          <input name="password_confirmation" type="password" autocomplete="new-password" maxlength="256">
+        </label>
+        <label id="campo-otp-acceso" class="oculto">
+          <span>C&oacute;digo 2FA o de recuperaci&oacute;n</span>
+          <input name="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="24">
+        </label>
+        <button type="submit" class="boton-principal" id="boton-acceso">Entrar</button>
+      </form>
+      <footer class="pie-acceso">
+        <span id="estado-configuracion">Comprobando configuraci&oacute;n&hellip;</span>
+        <span id="version-acceso">v&hellip;</span>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<div class="envoltorio oculto" id="vista-panel">
+  <header class="cabecera">
+    <img src="icono.svg" alt="">
+    <div>
+      <h1>Keepalived</h1>
+      <p class="sub" id="sub">cargando&hellip;</p>
+    </div>
+    <div class="hueco"></div>
+    <span class="version" id="version">VERSI&Oacute;N&hellip;</span>
+    <span class="latido" id="latido">&mdash;</span>
+    <button type="button" class="boton-cuenta" id="boton-cuenta"
+            title="Ir a mi perfil" aria-label="Ir a mi perfil">
+      <span class="avatar-cuenta" id="avatar-cuenta">?</span>
+      <span class="datos-cuenta">
+        <strong id="nombre-cuenta">Cuenta</strong>
+        <small id="rol-cuenta">&mdash;</small>
+      </span>
+    </button>
+    <button type="button" class="boton-sesion" id="cerrar-sesion">Salir</button>
+  </header>
+
+  <nav class="pestanas-app" aria-label="Secciones principales">
+    <button type="button" data-vista="estado" class="activa">Estado</button>
+    <button type="button" data-vista="perfil">Mi perfil</button>
+    <button type="button" data-vista="seguridad">Seguridad</button>
+    <button type="button" data-vista="usuarios" id="pestana-usuarios">Usuarios</button>
+    <button type="button" data-vista="api" id="pestana-api">Claves API</button>
+    <button type="button" data-vista="configuracion" id="pestana-configuracion">Configuraci&oacute;n</button>
+  </nav>
+
+  <main id="vista-operacion" class="vista-panel">
+    <div id="recado-global" class="recado mal oculto"></div>
+
+  <section>
+    <h2>Servidores</h2>
+    <p class="pista">
+      Antes de apagar o reiniciar un servidor, ponlo <strong>en mantenimiento</strong>:
+      las direcciones con respaldo se reparten entre los dem&aacute;s. Si alguna no puede
+      moverse, el panel te avisar&aacute; del servicio afectado y pedir&aacute; que aceptes el
+      riesgo antes de continuar. Cuando termines, devu&eacute;lvelo a servicio.
+    </p>
+    <div class="rejilla" id="rejilla-nodos"></div>
+  </section>
+
+  <section>
+    <h2>Direcciones</h2>
+    <p class="pista">
+      D&oacute;nde est&aacute; ahora cada direcci&oacute;n y en qu&eacute; servidor quieres que
+      viva. Al cambiar el servidor asignado, la direcci&oacute;n se mueve all&iacute;
+      &mdash;tarda unos segundos&mdash; y vuelve sola si ese servidor se cae y se recupera.
+    </p>
+    <div class="marco desliza">
+      <table class="tabla-direcciones">
+        <colgroup>
+          <col class="col-direccion">
+          <col class="col-servicio">
+          <col class="col-puertos">
+          <col class="col-nodos">
+          <col class="col-defecto">
+          <col class="col-acciones">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Direcci&oacute;n</th>
+            <th>Servicio</th>
+            <th>Puertos</th>
+            <th>Ahora en</th>
+            <th>Servidor por defecto</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="cuerpo-direcciones">
+          <tr><td colspan="6" class="vacio">cargando&hellip;</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="solo-operador">
+    <h2>A&ntilde;adir una direcci&oacute;n</h2>
+    <p class="pista">
+      Apuntarla aqu&iacute; <strong>no la pone en marcha</strong>: la incorpora al pool como
+      direcci&oacute;n libre.
+    </p>
+    <p class="pista">
+      Cuando una aplicaci&oacute;n la necesita, la reclama mediante la API y declara su nombre,
+      puertos y comprobaci&oacute;n de salud. El servidor por defecto contin&uacute;a siendo una
+      decisi&oacute;n del operador.
+    </p>
+    <form class="alta" id="form-alta" autocomplete="off">
+      <label class="campo-ip-alta">
+        <span>Direcci&oacute;n IP</span>
+        <input name="ip" id="campo-ip" placeholder="192.0.2.100" required>
+        <em class="ayuda">Por debajo del rango del DHCP.</em>
+      </label>
+      <label class="campo-vrid-alta">
+        <span>Identificador</span>
+        <input name="vrid" id="campo-vrid" type="text" inputmode="numeric"
+               pattern="[0-9]{1,3}" maxlength="3" autocomplete="off"
+               aria-describedby="ayuda-vrid" required>
+        <em class="ayuda" id="ayuda-vrid">Primer ID libre.</em>
+      </label>
+      <label class="campo-descripcion-alta">
+        <span>Descripci&oacute;n</span>
+        <input name="descripcion" placeholder="Nombre o prop&oacute;sito del servicio&hellip;">
+        <em class="ayuda">Opcional; s&oacute;lo es una nota para el operador.</em>
+      </label>
+      <div class="accion-alta">
+        <button type="submit" id="boton-alta">A&ntilde;adir</button>
+      </div>
+      <div class="recado-alta">
+        <div id="recado-alta" class="recado mal oculto"></div>
+      </div>
+    </form>
+  </section>
+
+    <footer>
+      <span id="pie-nodo"></span>
+      <a href="api/status" target="_blank" rel="noopener">Ver API JSON</a>
+      <a href="api/direcciones" target="_blank" rel="noopener">Estado JSON</a>
+      <a href="api/nodos" target="_blank" rel="noopener">Nodos JSON</a>
+      <span>se actualiza solo cada 6 s</span>
+    </footer>
+  </main>
+
+  <main id="vista-cuenta" class="vista-panel vista-ajustes oculto">
+    <header class="cabecera-vista">
+      <span class="sobrelinea" id="sobrelinea-vista">CUENTA</span>
+      <h2 id="titulo-vista">Mi perfil</h2>
+      <p id="descripcion-vista">Identidad y nombre visible de la sesi&oacute;n actual.</p>
+    </header>
+    <section id="panel-secretos" class="bloque-cuenta panel-secretos oculto"
+             aria-labelledby="titulo-codigos" aria-live="polite">
+      <header class="cabecera-bloque">
+        <h3 id="titulo-codigos">C&oacute;digos de recuperaci&oacute;n</h3>
+        <p id="texto-codigos">Gu&aacute;rdalos ahora en un lugar seguro.</p>
+      </header>
+      <div id="lista-codigos" class="lista-codigos"></div>
+      <div id="recado-codigos" class="recado bien oculto" role="status"></div>
+      <div class="acciones-secretos">
+        <button type="button" id="copiar-codigos">Copiar</button>
+        <button type="button" id="descargar-codigos">Descargar</button>
+        <button type="button" id="aceptar-codigos" class="boton-principal">Ya lo he guardado</button>
+      </div>
+    </section>
+    <div id="contenido-cuenta" class="contenido-cuenta"></div>
+  </main>
+</div>
+
+<dialog id="dialogo-confirmacion" class="dialogo" aria-labelledby="dialogo-titulo">
+  <form method="dialog" class="dialogo-contenido">
+    <header>
+      <h2 id="dialogo-titulo">Confirmar acci&oacute;n</h2>
+      <button type="submit" value="cancelar" class="cerrar-dialogo"
+              aria-label="Cerrar">&times;</button>
+    </header>
+    <div id="dialogo-cuerpo" class="dialogo-cuerpo"></div>
+    <label id="dialogo-aceptacion" class="aceptacion-dialogo oculto">
+      <input type="checkbox" id="dialogo-casilla">
+      <span id="dialogo-texto-aceptacion"></span>
+    </label>
+    <footer>
+      <button type="submit" value="cancelar">Cancelar</button>
+      <button type="submit" value="confirmar" id="dialogo-confirmar"
+              class="accion-dialogo">Confirmar</button>
+    </footer>
+  </form>
+</dialog>
+
+<div id="avisos-app" class="avisos-app" aria-live="polite"></div>
+
+<script src="auth.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
