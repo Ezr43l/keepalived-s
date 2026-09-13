@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/Ezr43l/keepalived-s/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Ezr43l/keepalived-s/actions/workflows/ci.yml/badge.svg"></a>
-  <img alt="Versión 1.0.6" src="https://img.shields.io/badge/versión-1.0.6-a78bfa">
+  <img alt="Versión 1.0.7" src="https://img.shields.io/badge/versión-1.0.7-a78bfa">
   <img alt="Un contenedor" src="https://img.shields.io/badge/despliegue-1%20contenedor-55df9a">
   <img alt="VRRP" src="https://img.shields.io/badge/red-VRRP-12cddd">
   <a href="LICENSE"><img alt="Licencia Apache 2.0" src="https://img.shields.io/badge/licencia-Apache--2.0-7d91a3"></a>
@@ -14,7 +14,7 @@
 
 Infraestructura de alta disponibilidad para direcciones IPv4 flotantes. Una dirección
 permanece estable para sus clientes y se mueve al nodo que está sirviendo realmente la
-aplicación. `1.0.6` es la única versión publicada en este repositorio.
+aplicación. `1.0.7` es la única versión publicada en este repositorio.
 
 **[Instalación](docs/instalacion.md)** ·
 **[Arquitectura](docs/arquitectura.md)** ·
@@ -31,9 +31,9 @@ aplicación. `1.0.6` es la única versión publicada en este repositorio.
 | Acceso de aplicaciones | claves API individuales, revocables y con scopes |
 | Adaptador incluido | plantilla y despliegue remoto para Unraid |
 | Estado persistente | `pool.json` y `security.json`, con revisión causal y réplica por cuórum |
-| Versión actual | `1.0.6` |
+| Versión actual | `1.0.7` |
 | Código y seguimiento | repositorio público `Ezr43l/keepalived-s` |
-| Imagen de release | `ghcr.io/ezr43l/keepalived-s:1.0.6` |
+| Imagen de release | `ghcr.io/ezr43l/keepalived-s:1.0.7` |
 
 ## Qué resuelve
 
@@ -47,7 +47,7 @@ aplicación. `1.0.6` es la única versión publicada en este repositorio.
 - Protege el panel con cuentas locales y la API con una credencial diferente por aplicación.
 - Reconcilia el pool y las credenciales por causalidad y exige una mayoría de identidades
   lógicas antes de confirmar cambios.
-- Limita el contrato de la versión 1.0.6 a 64 VIP host-unicast en redes `/24`; nunca acepta
+- Limita el contrato de la versión 1.0.7 a 64 VIP host-unicast en redes `/24`; nunca acepta
   una VIP igual a la dirección de gestión de un nodo.
 
 ## Seguridad
@@ -178,21 +178,21 @@ cambiar usuarios, mantenimiento o servidor preferido.
 ./build-image.sh
 ```
 
-El comando construye `keepalived:1.0.6` en la máquina local y no publica nada.
+El comando construye `keepalived:1.0.7` en la máquina local y no publica nada.
 `build-image.sh` sólo admite carga local con `--load` y rechaza cualquier flujo de push. La
 publicación se realiza exclusivamente mediante el workflow protegido del repositorio público.
 
 El Dockerfile está configurado para ejecutar toda la batería obligatoria antes de producir
 cualquier runtime. La
 imagen y el panel muestran la versión de [`VERSION`](VERSION), que se mantiene
-deliberadamente en `1.0.6`.
+deliberadamente en `1.0.7`.
 
 El XML y el Compose guardados en el árbol son fuentes de desarrollo. La release pública genera
-`my-Keepalived-1.0.6.xml` y `docker-compose-1.0.6.yml` como adjuntos separados: ambos apuntan a
+`my-Keepalived-1.0.7.xml` y `docker-compose-1.0.7.yml` como adjuntos separados: ambos apuntan a
 la misma imagen multi-arquitectura mediante `@sha256`, y el Compose distribuido no conserva
 `build:`. Una instalación estable debe descargar esos adjuntos, `SHA256SUMS` e
 `image-digest.txt` desde la release inmutable; no debe convertir por su cuenta la etiqueta
-`:1.0.6` ni copiar un digest hijo exclusivo de AMD64 o ARM64.
+`:1.0.7` ni copiar un digest hijo exclusivo de AMD64 o ARM64.
 
 La imagen usa Python 3.12 sobre Alpine 3.24 fijada por digest y dependencias
 Python fijadas mediante wheels, incluida `cryptography 50.0.1`. Las puertas de CI

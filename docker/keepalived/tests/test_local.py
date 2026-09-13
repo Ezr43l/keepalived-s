@@ -35,7 +35,7 @@ class SaludLocalTest(unittest.TestCase):
                     f"http://127.0.0.1:{httpd.server_port}/api/health", timeout=5) as respuesta:
                 payload = json.loads(respuesta.read())
             self.assertEqual({"estado", "version"}, set(payload))
-            self.assertEqual("1.0.6", payload["version"]["version"])
+            self.assertEqual("1.0.7", payload["version"]["version"])
         finally:
             httpd.shutdown()
             httpd.server_close()

@@ -104,7 +104,7 @@ paradas, arranques o renames fuera del coordinador antes de clasificar el fallo.
 
 ## Rotación de secretos de infraestructura
 
-La versión 1.0.6 no automatiza una rotación segura en sitio. El despliegue compara huellas
+La versión 1.0.7 no automatiza una rotación segura en sitio. El despliegue compara huellas
 en todos los nodos y aborta sin cambios si el material local no coincide con el activo.
 
 - El secreto de sesión está ligado a cookies, TOTP cifrados y hashes de claves API. Sustituirlo

@@ -119,7 +119,7 @@ contenedor temporal sin red, con rootfs de sólo lectura, sin capacidades y con
 `no-new-privileges`. El preflight rechaza esquema inválido, topología distinta, ramas causales
 concurrentes, ausencia no autorizada y falta de cuórum.
 
-El `pull` puede partir de la etiqueta versionada `:1.0.6`, pero el despliegue conserva el
+El `pull` puede partir de la etiqueta versionada `:1.0.7`, pero el despliegue conserva el
 `RepoDigest` inmutable devuelto por el Registry, arranca por el ID local `sha256` y exige que
 todos los peers v2 pertenezcan a la misma revisión OCI. AMD64 y ARM64 son variantes de CPU de
 este mismo runtime Linux, no aplicaciones distintas ni builds nativos de Windows.
@@ -150,7 +150,7 @@ ese nodo ceda la dirección aunque el sistema operativo continúe encendido.
 
 ## Límites deliberados
 
-- La versión 1.0.6 admite un máximo de 64 VIP host-unicast, exclusivamente con prefijo `/24`.
+- La versión 1.0.7 admite un máximo de 64 VIP host-unicast, exclusivamente con prefijo `/24`.
 - Ninguna VIP puede ser red, broadcast, loopback, multicast, link-local ni coincidir con una IP
   de gestión declarada.
 - No replica bases de datos, certificados ni archivos de las aplicaciones.

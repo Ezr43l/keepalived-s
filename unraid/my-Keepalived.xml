@@ -2,7 +2,7 @@
 <!-- Plantilla publica generica. No contiene topologia ni secretos. -->
 <Container version="2">
   <Name>Keepalived</Name>
-  <Repository>ghcr.io/ezr43l/keepalived-s:1.0.6</Repository>
+  <Repository>ghcr.io/ezr43l/keepalived-s:stable</Repository>
   <Registry>https://github.com/Ezr43l/keepalived-s/pkgs/container/keepalived-s</Registry>
   <Network>host</Network>
   <MyIP/>

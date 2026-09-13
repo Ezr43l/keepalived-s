@@ -39,7 +39,7 @@ Copiar `manifiesto.example.sh` fuera del repositorio y definir:
 - nodos: nombre, IP de gestión, interfaz, prioridad y fichero SSH;
 - hasta 64 direcciones iniciales: nombre, VIP host-unicast, VRID, puerto/ruta de salud y nodo
   preferido opcional; ninguna puede coincidir con la IP de gestión de un nodo;
-- inicio del rango DHCP por último octeto y prefijo fijo `/24` en la versión 1.0.6;
+- inicio del rango DHCP por último octeto y prefijo fijo `/24` en la versión 1.0.7;
 - `PREEMPT_DELAY`, entero entre 0 y 1000 segundos, que también se persiste como
   `FIP_RETARDO` en cada contenedor;
 - registros por nodo, si no usan el valor predeterminado.
@@ -80,26 +80,26 @@ conectarse a Docker ni modificar nodos.
 ./build-image.sh
 ```
 
-Esto crea `keepalived:1.0.6` en Docker local, ejecuta la batería obligatoria y no
+Esto crea `keepalived:1.0.7` en Docker local, ejecuta la batería obligatoria y no
 publica nada. También puede usarse directamente:
 
 ```bash
 docker build --file docker/keepalived/Dockerfile \
-  --build-arg FIP_APP_VERSION=1.0.6 \
-  --tag keepalived:1.0.6 .
+  --build-arg FIP_APP_VERSION=1.0.7 \
+  --tag keepalived:1.0.7 .
 ```
 
 La plantilla Unraid no construye imágenes: descarga exactamente su campo
 `<Repository>`. El destino de la release compartida es
-`ghcr.io/ezr43l/keepalived-s:1.0.6`, de modo que una instalación nueva no
+`ghcr.io/ezr43l/keepalived-s:1.0.7`, de modo que una instalación nueva no
 necesitará disponer antes de un Registry propio. Mientras esa imagen no esté publicada,
 debe construirse desde el código fuente auditado y distribuirse por un registro elegido
 por el operador. La publicación sólo se habilita en `Ezr43l/keepalived-s` tras superar la
 checklist de release.
 
 Para una instalación estable no se utiliza directamente el XML del árbol ni se copia el tag
-anterior. Se descargan de la GitHub Release inmutable `my-Keepalived-1.0.6.xml`,
-`docker-compose-1.0.6.yml`, `SHA256SUMS` e `image-digest.txt`. Los dos instaladores generados
+anterior. Se descargan de la GitHub Release inmutable `my-Keepalived-1.0.7.xml`,
+`docker-compose-1.0.7.yml`, `SHA256SUMS` e `image-digest.txt`. Los dos instaladores generados
 contienen exactamente `ghcr.io/ezr43l/keepalived-s@sha256:<digest-del-índice>`; ese digest es
 el índice multi-arquitectura atestiguado, no uno de sus manifiestos hijo. Antes de instalar se
 verifican la procedencia de `SHA256SUMS` y las sumas de los adjuntos. El Compose de release no
@@ -278,7 +278,7 @@ partir de ese momento sólo un administrador autenticado puede crear otras cuent
 | `FIP_COOKIE_SECURE` | `1` con HTTPS; `0` para HTTP directo |
 | `FIP_TOTP_ISSUER` | nombre reconocible de la instalación |
 
-El adaptador de la versión 1.0.6 **no rota en sitio** ninguno de los tres secretos: una huella
+El adaptador de la versión 1.0.7 **no rota en sitio** ninguno de los tres secretos: una huella
 distinta aborta antes de detener contenedores. Cambiar `FIP_SESSION_SECRET` invalida sesiones
 y deja sin posibilidad de descifrado/verificación los TOTP y claves API existentes; requiere
 una migración explícita con reenrolado de credenciales. `FIP_CLUSTER_TOKEN` exige congelar

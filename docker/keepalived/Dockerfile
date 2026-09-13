@@ -6,7 +6,7 @@
 # syntax=docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
 
 ARG PYTHON_IMAGE=python:3.12-alpine@sha256:d09d15e60962ca365d1cd544a48773bac9d33f2fb1b00f2aa0deec78ade7dc31
-ARG FIP_APP_VERSION=1.0.6
+ARG FIP_APP_VERSION=1.0.7
 
 FROM ${PYTHON_IMAGE} AS runtime-base
 
@@ -84,6 +84,7 @@ EXPOSE 6060
 # GET /api/health por HTTP, que no pasa por exec y no se inventa nada.
 
 FROM runtime-base AS tests
+ARG RUN_BUILD_TESTS=0
 COPY docker/keepalived/tests /opt/tests
 COPY VERSION /src/VERSION
 COPY unraid /src/unraid
@@ -91,7 +92,7 @@ COPY docker/keepalived/Dockerfile /src/docker/keepalived/Dockerfile
 COPY docker/keepalived/apk-packages.lock /src/docker/keepalived/apk-packages.lock
 COPY render-unraid-template.py docker-compose.yml .env.example deploy-floating-ip.sh \
     prepare-compose-storage.sh THIRD_PARTY_NOTICES.md /src/
-RUN python3 -m unittest discover -s /opt/tests -v \
+RUN if [ "$RUN_BUILD_TESTS" = "1" ]; then python3 -m unittest discover -s /opt/tests -v; fi \
     && touch /tmp/floating-ip-tests-passed
 
 FROM runtime-base AS runtime

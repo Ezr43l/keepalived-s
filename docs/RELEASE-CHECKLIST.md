@@ -1,4 +1,4 @@
-# Checklist de publicación de Keepalived 1.0.6
+# Checklist de publicación de Keepalived 1.0.7
 
 El código, la validación y la publicación pertenecen al repositorio público
 `Ezr43l/keepalived-s`. Sólo una versión estable aprobada puede publicarse.
@@ -17,7 +17,7 @@ El código, la validación y la publicación pertenecen al repositorio público
 - [x] Migrar la plantilla y el adaptador de despliegue a secretos por fichero,
   con rutas genéricas, permisos root-only y sin valores en `docker inspect`.
 - [ ] Cerrar el candidato en un único commit y actualizar
-  `VALIDATION-1.0.6.md` con resultados de ese SHA exacto, sin heredar IDs ni
+  `VALIDATION-1.0.7.md` con resultados de ese SHA exacto, sin heredar IDs ni
   recuentos de otro árbol.
 - [ ] Ejecutar la suite completa y construir desde ese commit las imágenes Linux
   AMD64 y ARM64.
@@ -60,7 +60,7 @@ El código, la validación y la publicación pertenecen al repositorio público
 - [ ] Configurar la variable del repositorio público `LICENSE_SPDX=Apache-2.0`.
 - [ ] Confirmar que `Ezr43l/keepalived-s` conserva únicamente referencias públicas.
 - [ ] Publicar desde un árbol limpio y el commit aprobado.
-- [ ] Publicar `ghcr.io/ezr43l/keepalived-s:1.0.6` para AMD64/ARM64 con SBOM,
+- [ ] Publicar `ghcr.io/ezr43l/keepalived-s:1.0.7` para AMD64/ARM64 con SBOM,
   procedencia y digest.
 - [ ] Verificar pull anónimo y todos los enlaces de la plantilla pública.
 - [ ] Ejecutar Trivy y Gitleaks de nuevo sobre el artefacto exportado.
@@ -79,7 +79,7 @@ El código, la validación y la publicación pertenecen al repositorio público
 
 ## Contrato inmutable de esta release
 
-1. La versión permanece exactamente `1.0.6` en `VERSION`, imagen, Compose,
+1. La versión permanece exactamente `1.0.7` en `VERSION`, imagen, Compose,
    panel y plantilla.
 2. Sólo el workflow protegido del repositorio público puede publicar artefactos.
 3. La plantilla pública no contiene valores de una instalación y apunta a

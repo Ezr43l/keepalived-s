@@ -6,6 +6,14 @@ su candidata conservan ese número y obligan a reconstruir y repetir todas las
 puertas. Después de publicarla, cualquier cambio del runtime requiere una nueva
 versión SemVer.
 
+## [1.0.7] - 2026-09-13
+
+### Added
+
+- Añadido en el acceso y en el pie del panel el enlace de soporte a la comunidad de
+  Discord de Unraides.
+- La plantilla pública sigue el canal `stable`.
+
 ## [1.0.6] - Unreleased
 
 ### Fixed

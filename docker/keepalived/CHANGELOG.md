@@ -5,6 +5,10 @@ producto completo está en [`../../CHANGELOG.md`](../../CHANGELOG.md) y la
 evidencia del candidato exacto en
 [`../../docs/VALIDATION-1.0.1.md`](../../docs/VALIDATION-1.0.1.md).
 
+## [1.0.7] - 2026-09-13
+
+- Añadido el enlace de soporte a Unraides en el acceso y en el pie del panel.
+
 ## [1.0.6] - Unreleased
 
 - Actualizado `libuuid` a `2.42.3-r1` para eliminar las vulnerabilidades altas

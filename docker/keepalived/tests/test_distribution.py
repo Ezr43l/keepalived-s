@@ -64,7 +64,7 @@ class ContratoDistribucionTest(unittest.TestCase):
 
     def test_version_es_consistente(self):
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
-        self.assertEqual("1.0.6", version)
+        self.assertEqual("1.0.7", version)
         for ruta in (
             ROOT / "docker" / "keepalived" / "Dockerfile"
             if (ROOT / "docker" / "keepalived" / "Dockerfile").is_file()
@@ -73,7 +73,7 @@ class ContratoDistribucionTest(unittest.TestCase):
             ROOT / ".env.example",
         ):
             if ruta.is_file():
-                self.assertIn("1.0.6", ruta.read_text(encoding="utf-8"))
+                self.assertIn("1.0.7", ruta.read_text(encoding="utf-8"))
 
     def test_panel_enlaza_el_estado_de_la_api(self):
         panel_path = ROOT / "docker/keepalived/panel/web/index.html"
@@ -90,7 +90,7 @@ class ContratoDistribucionTest(unittest.TestCase):
         prefijos_privados = ("10" + ".100.", "192" + ".168.")
         for prohibido in ("__IMAGE__", "__NODO__", *prefijos_privados):
             self.assertNotIn(prohibido, texto)
-        self.assertIn("ghcr.io/ezr43l/keepalived-s:1.0.6", texto)
+        self.assertIn("ghcr.io/ezr43l/keepalived-s:1.0.7", texto)
         raiz = ET.parse(ruta).getroot()
         configs = {c.get("Target"): c.text or "" for c in raiz.findall("Config")}
         for secreto_directo in (
@@ -132,13 +132,13 @@ class ContratoDistribucionTest(unittest.TestCase):
                     sys.executable,
                     str(ROOT / "render-unraid-template.py"),
                     str(plantilla),
-                    "--repository", "registry.example/keepalived:1.0.6",
+                    "--repository", "registry.example/keepalived:1.0.7",
                     "--webui", "http://[IP]:7000/",
                     "--set", "FIP_PUERTO=7000",
                 ], check=True, stdout=destino)
             raiz = ET.parse(salida).getroot()
             self.assertEqual(
-                "registry.example/keepalived:1.0.6", raiz.findtext("Repository"))
+                "registry.example/keepalived:1.0.7", raiz.findtext("Repository"))
             self.assertEqual("http://[IP]:7000/", raiz.findtext("WebUI"))
         self.assertEqual(original, plantilla.read_bytes())
 
