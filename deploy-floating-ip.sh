@@ -2382,7 +2382,7 @@ for entrada in "${NODOS[@]}"; do
       --set "FIP_SESSION_SECRET_FILE=/run/secrets/fip_session_secret" \
       --set "/run/secrets/fip_cluster_token=$REMOTE_SECRETS_DIR/cluster-token.txt" \
       --set "FIP_CLUSTER_TOKEN_FILE=/run/secrets/fip_cluster_token" \
-    | sed -E "s#https://raw.githubusercontent.com/Ezr43l/keepalived-s/[^/]+/logo/icono.png#$ICONO_URL#g" \
+    | sed -E "s#https://raw.githubusercontent.com/Ezr43l/(floating-ip-s|keepalived-s)/[^/]+/logo/icono.png#$ICONO_URL#g" \
       > "$plantilla_local"
   chmod 0600 -- "$plantilla_local"
   [[ -s "$plantilla_local" && "$(stat -c %s -- "$plantilla_local")" -le 1048576 ]]

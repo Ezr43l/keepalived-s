@@ -10,7 +10,7 @@ if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)?$ ]]; then
   exit 2
 fi
 
-IMAGE_REPOSITORY="${FIP_IMAGE_REPOSITORY:-${IMAGE_REPOSITORY:-floating-ip}}"
+IMAGE_REPOSITORY="${FIP_IMAGE_REPOSITORY:-${IMAGE_REPOSITORY:-keepalived}}"
 IMAGE="$IMAGE_REPOSITORY:$VERSION"
 SOURCE_URL="${SOURCE_URL:-https://github.com/Ezr43l/keepalived-s}"
 LICENSE_SPDX="${LICENSE_SPDX:-Apache-2.0}"
