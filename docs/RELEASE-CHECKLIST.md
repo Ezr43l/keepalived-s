@@ -1,94 +1,50 @@
-# Checklist de publicación de Keepalived 1.0.7
+# Publicación de Keepalived
 
-El código, la validación y la publicación pertenecen al repositorio público
-`Ezr43l/keepalived-s`. Sólo una versión estable aprobada puede publicarse.
+Procedimiento vigente desde el 15 de septiembre de 2026. Sustituye el antiguo
+proceso de publicación automática y sus requisitos de tareas en GitHub.
 
-## Puertas pendientes
+## Versión actual
 
-- [ ] Ejecutar externamente `PUT` + `GET /repos/{owner}/{repo}/immutable-releases`
-  con permisos de administración y, sólo tras confirmar `enabled=true`, fijar
-  `IMMUTABLE_RELEASES_ENABLED=true`. El workflow no almacena ningún PAT y
-  comprueba de nuevo `immutable=true` tras publicar.
+- Versión: `1.0.7`.
+- Desarrollo privado: `Ezr43l/keepalived`.
+- Distribución pública: `Ezr43l/keepalived-s`.
+- Imagen por versión: `ghcr.io/ezr43l/keepalived-s:1.0.7`.
+- Canal de la plantilla: `ghcr.io/ezr43l/keepalived-s:stable`.
 
-- [x] Adoptar Apache-2.0 y añadir el texto canónico en `LICENSE`.
-- [x] Separar la licencia del código propio de las licencias de la imagen agregada,
-  incorporar los textos GPL de Keepalived/iproute2 y documentar las fuentes en
-  `THIRD_PARTY_NOTICES.md`.
-- [x] Migrar la plantilla y el adaptador de despliegue a secretos por fichero,
-  con rutas genéricas, permisos root-only y sin valores en `docker inspect`.
-- [ ] Cerrar el candidato en un único commit y actualizar
-  `VALIDATION-1.0.7.md` con resultados de ese SHA exacto, sin heredar IDs ni
-  recuentos de otro árbol.
-- [ ] Ejecutar la suite completa y construir desde ese commit las imágenes Linux
-  AMD64 y ARM64.
-- [ ] Probar escritor fijo, cuórum por identidad, causalidad, anti-entropía,
-  commits inciertos y recuperación de un nodo sin estado para pool y acceso.
-- [ ] Demostrar en una prueba mixta que un nodo antiguo recibe cero `POST` del
-  protocolo v2 y no cuenta para su cuórum.
-- [ ] Probar la semilla de manifiesto: misma huella en todos los nodos, creación
-  exclusivamente con `--fresh-install` sobre el clúster completo y vacío;
-  ninguna actualización ni reemplazo puede instalarla.
-- [ ] Probar que un reemplazo sin estado adopta el dominante causal de una
-  mayoría y que, en dos nodos, un único superviviente no puede inicializarlo:
-  exige restaurar antes una copia coherente.
-- [ ] Probar una instalación Compose nueva con pool vacío, arranque bloqueado
-  hasta cuórum y primer administrador registrado exclusivamente en el escritor.
-- [ ] Probar que un cuórum de volúmenes ausentes sin marcadores falla cerrado y que
-  `--fresh-install` sólo funciona sobre el clúster completo realmente vacío.
-- [ ] Probar separación entre `/datos` y secretos, permisos root-only y rechazo de symlinks,
-  hardlinks y rutas anidadas tanto en Compose como en Unraid.
-- [ ] Probar los límites de 16 nodos y 64 VIP, `/24`, host-unicast, retardo 0-1000
-  y rechazo de colisiones con IP de gestión.
-- [ ] Probar que el preflight valida esquema, topología, causalidad y cuórum de
-  todos los estados dentro de la imagen candidata Linux, con `--network=none`,
-  rootfs read-only, capacidades eliminadas y antes de cambiar permisos o detener
-  ningún contenedor.
-- [ ] Probar `RepoDigest` inmutable, arranque por ID local `sha256`, etiquetas de
-  versión/protocolo/revisión y una única revisión para toda la cohorte v2.
-- [ ] Integrar en `deploy-floating-ip.sh` la transacción duradera de clúster:
-  journal root-only, snapshots de todos los nodos, barrera `.deploy-freeze`,
-  preservación del contenedor previo, decisión de commit y rollback coordinado.
-- [ ] Demostrar que un candidato fallido recupera estados, plantillas y
-  contenedores previos sin dejar VIP, journals ni marcadores residuales, y que
-  una decisión de commit duradera siempre gana durante la reanudación.
-- [ ] Inyectar fallos en cada fase de `--fresh-install` y demostrar reanudación o
-  limpieza exacta sin confundir un alta parcial con pérdida de volúmenes.
-- [ ] Confirmar que `/api/health` sólo expone liveness y versión, y que el estado
-  de escritor/readiness requiere sesión.
-- [ ] Auditar repositorio, plantillas, documentación, historial exportable y
-  metadatos para nombres, hosts, IP, rutas, registros o secretos privados.
-- [ ] Configurar la variable del repositorio público `LICENSE_SPDX=Apache-2.0`.
-- [ ] Confirmar que `Ezr43l/keepalived-s` conserva únicamente referencias públicas.
-- [ ] Publicar desde un árbol limpio y el commit aprobado.
-- [ ] Publicar `ghcr.io/ezr43l/keepalived-s:1.0.7` para AMD64/ARM64 con SBOM,
-  procedencia y digest.
-- [ ] Verificar pull anónimo y todos los enlaces de la plantilla pública.
-- [ ] Ejecutar Trivy y Gitleaks de nuevo sobre el artefacto exportado.
-- [ ] Ejecutar sobre el candidato exacto los laboratorios VRRP de contenedores
-  Linux orquestados desde shell y PowerShell: propiedad exclusiva, drenaje,
-  preempción, caída del maestro, split-brain inducido y restauración exacta.
-- [ ] Probar VRRP real en al menos dos hosts Linux/Unraid del mismo dominio de
-  broadcast: elección, caída de servicio, drenaje, recuperación, split-brain y
-  liberación de VIP al parar el contenedor.
-- [ ] Probar backup y restauración conjunta de `pool.json`, `security.json`,
-  secretos y configuración Keepalived, incluida la recuperación de un nodo nuevo
-  desde la mayoría causal.
-- [ ] Validar HTTPS, `FIP_COOKIE_SECURE=1` y, si procede, una CA privada entre
-  pares mediante `FIP_CLUSTER_CA_FILE`.
-- [ ] Instalar desde cero usando sólo artefactos y documentación públicos.
+## Pasos para una modificación
 
-## Contrato inmutable de esta release
+1. Aplicar únicamente el cambio solicitado en el proyecto privado.
+2. Para cambios de código, asignar la versión acordada en `VERSION` y actualizar
+   el historial y las referencias de versión afectadas.
+3. Comprobar la parte modificada y sus dependencias directas: máximo 20 pruebas
+   concretas, realizadas en nuestros equipos, no en GitHub.
+4. Si cambia el código de la imagen, construir aquí o en nuestros servidores
+   las variantes Linux AMD64 y ARM64 necesarias. No recompilar por cambios sólo
+   documentales, de soporte o del nombre de un repositorio.
+5. Publicar el código terminado en los repositorios privado y público, sin
+   copiar al público el historial privado, credenciales ni datos de instalación.
+6. Subir a GHCR las imágenes ya construidas, conservar su etiqueta de versión
+   y actualizar el canal aprobado. RTFM usa `dev`; las demás usan `stable`.
+7. Crear la ficha de versión en GitHub desde el cambio aprobado. Una ficha o
+   una subida no debe iniciar ninguna tarea automática.
+8. Sincronizar los tres Gitea y comprobar que cada espejo apunta exactamente
+   al mismo cambio que el repositorio privado de GitHub.
+9. Si hay una imagen nueva, probarla primero en Khonshu y, tras aprobación,
+   desplegar esa misma imagen en los tres servidores y comprobar lo afectado.
 
-1. La versión permanece exactamente `1.0.7` en `VERSION`, imagen, Compose,
-   panel y plantilla.
-2. Sólo el workflow protegido del repositorio público puede publicar artefactos.
-3. La plantilla pública no contiene valores de una instalación y apunta a
-   `Ezr43l/keepalived-s`.
-4. La instalación nueva no depende de un Registry local; los mirrors internos
-   son overrides opcionales.
-5. El workflow rechaza licencia ausente, tag divergente, repositorio incorrecto
-   y cualquier vulnerabilidad crítica o alta, tenga o no corrección disponible.
-6. AMD64 y ARM64 son arquitecturas CPU de una misma aplicación de servidor
-   Linux; no se publica ni documenta un runtime nativo para Windows.
-7. El orden de `FIP_NODOS`, y por tanto su primer nodo escritor, forma parte de la
-   configuración coherente del clúster y es idéntico en todos sus miembros.
+GitHub es un destino pasivo: no construye, prueba, analiza ni prepara versiones.
+Sus tareas automáticas permanecen desactivadas. Las imágenes anteriores y sus
+etiquetas no se eliminan manualmente; Local Registry regula su retención.
+
+## Instalación y soporte
+
+La plantilla sólo requiere el puerto del panel y una ruta persistente. La
+topología, las IP flotantes, las cuentas y las claves API se configuran en el portal.
+
+Una aplicación se instala como un único contenedor. Las plantillas públicas
+no contienen datos de nuestra instalación. Una plantilla descarga una imagen;
+no la construye. El canal se actualiza sin cambiar la URL de la plantilla.
+
+Soporte exclusivamente en [Unraides en Discord](https://discord.gg/8MAT6ZGJTW).
+El código propio usa Apache-2.0; los componentes de terceros conservan sus
+licencias y los avisos incluidos en la distribución.

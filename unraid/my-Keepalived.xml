@@ -8,7 +8,7 @@
   <MyIP/>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
-  <Support>https://github.com/Ezr43l/keepalived-s/issues</Support>
+  <Support>https://discord.gg/8MAT6ZGJTW</Support>
   <Project>https://github.com/Ezr43l/keepalived-s</Project>
   <Overview>Sostiene direcciones IPv4 flotantes mediante VRRP y comprueba la salud real de cada servicio en cada nodo. Tras el primer arranque, el asistente web solicita la topologia y genera los secretos dentro del volumen persistente. El panel incluye cuentas, roles, 2FA y claves API revocables. Toda la aplicacion se ejecuta en este unico contenedor.</Overview>
   <Category>Network:Management Tools:</Category>
