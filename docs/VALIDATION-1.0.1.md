@@ -12,7 +12,7 @@ anterior. La evidencia final se registrará aquí sólo después de fijar un com
 ambas arquitecturas desde él y ejecutar todas las puertas sobre esos artefactos exactos.
 
 No existe todavía una imagen pública aprobada en
-`ghcr.io/ezr43l/floating-ip-s:1.0.1`. Una etiqueta local con el mismo número de versión no es
+`ghcr.io/ezr43l/keepalived-s:1.0.1`. Una etiqueta local con el mismo número de versión no es
 evidencia de promoción.
 
 ## Contrato que debe validarse
