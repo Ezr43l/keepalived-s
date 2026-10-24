@@ -43,7 +43,7 @@ GET /api/health
 ```json
 {
   "estado": "ok",
-  "version": {"version": "1.0.7"}
+  "version": {"version": "1.0.8"}
 }
 ```
 

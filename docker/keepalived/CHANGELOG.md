@@ -5,6 +5,11 @@ producto completo está en [`../../CHANGELOG.md`](../../CHANGELOG.md) y la
 evidencia del candidato exacto en
 [`../../docs/VALIDATION-1.0.1.md`](../../docs/VALIDATION-1.0.1.md).
 
+## [1.0.8] - 2026-10-24
+
+- Actualizadas Python y las bibliotecas de Alpine para corregir los avisos recientes.
+- Retirado `pip` de la imagen final después de instalar las dependencias fijadas.
+
 ## [1.0.7] - 2026-09-13
 
 - Añadido el enlace de soporte a Unraides en el acceso y en el pie del panel.

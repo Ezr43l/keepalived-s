@@ -6,6 +6,14 @@ su candidata conservan ese número y obligan a reconstruir y repetir todas las
 puertas. Después de publicarla, cualquier cambio del runtime requiere una nueva
 versión SemVer.
 
+## [1.0.8] - 2026-10-24
+
+### Seguridad
+
+- Actualizada la base a Python 3.12.15 y las revisiones corregidas de Alpine.
+- Actualizado el instalador de paquetes durante la construcción y retirado de la imagen
+  final, donde no es necesario.
+
 ## [1.0.7] - 2026-09-13
 
 ### Added

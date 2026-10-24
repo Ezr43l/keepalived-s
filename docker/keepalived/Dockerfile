@@ -5,8 +5,8 @@
 # toca nada.
 # syntax=docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
 
-ARG PYTHON_IMAGE=python:3.12-alpine@sha256:d09d15e60962ca365d1cd544a48773bac9d33f2fb1b00f2aa0deec78ade7dc31
-ARG FIP_APP_VERSION=1.0.7
+ARG PYTHON_IMAGE=python:3.12-alpine@sha256:b658b05ce9c4eb97ec6fc19424818a1f31993659c2b505a532f470e83807815d
+ARG FIP_APP_VERSION=1.0.8
 
 FROM ${PYTHON_IMAGE} AS runtime-base
 
@@ -40,8 +40,10 @@ RUN apk add --no-cache \
     && sed -n '/^P:iproute2$/,/^$/p' /lib/apk/db/installed \
       | grep -Fx 'c:3ee752ad0c8445c8105177cd5cebdd730789bcd8'
 COPY docker/keepalived/requirements.txt /tmp/requirements.txt
-RUN pip install --no-cache-dir --only-binary=:all: --require-hashes \
-      --requirement /tmp/requirements.txt
+RUN python3 -m pip install --no-cache-dir --upgrade pip==26.2.2 \
+    && python3 -m pip install --no-cache-dir --only-binary=:all: --require-hashes \
+      --requirement /tmp/requirements.txt \
+    && python3 -m pip uninstall --yes pip
 
 # Las imágenes Alpine no conservan necesariamente los textos de licencia de
 # cada APK. Se incorporan las copias upstream exactas, fijadas por checksum.

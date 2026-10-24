@@ -78,7 +78,7 @@ INTERVALO_RECONCILIACION = max(
 
 def version_info():
     """Identificador unico del codigo que esta sirviendo este proceso."""
-    return {"version": os.environ.get("FIP_APP_VERSION", "").strip() or "1.0.7"}
+    return {"version": os.environ.get("FIP_APP_VERSION", "").strip() or "1.0.8"}
 
 
 SESSION_SECRET = configuracion.secreto("FIP_SESSION_SECRET")
