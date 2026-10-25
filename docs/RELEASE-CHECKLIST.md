@@ -29,8 +29,8 @@ proceso de publicación automática y sus requisitos de tareas en GitHub.
    una subida no debe iniciar ninguna tarea automática.
 8. Sincronizar los tres Gitea y comprobar que cada espejo apunta exactamente
    al mismo cambio que el repositorio privado de GitHub.
-9. Si hay una imagen nueva, probarla primero en Khonshu y, tras aprobación,
-   desplegar esa misma imagen en los tres servidores y comprobar lo afectado.
+9. Si hay una imagen nueva, probarla primero en un nodo de pruebas y, tras aprobación,
+   desplegar esa misma imagen en los nodos de destino y comprobar lo afectado.
 
 GitHub es un destino pasivo: no construye, prueba, analiza ni prepara versiones.
 Sus tareas automáticas permanecen desactivadas. Las imágenes anteriores y sus
