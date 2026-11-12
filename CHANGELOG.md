@@ -1,5 +1,11 @@
 # CHANGELOG — Floating IP
 
+## 1.0.9 — 2026-11-12
+
+- Actualización de seguridad de Python, Expat y paquetes del contenedor.
+- Correcciones oficiales de OpenSSL del 10 de noviembre, sobre la versión estable y verificadas por su huella.
+- cryptography compilada contra las mismas librerías corregidas, sin otra copia de OpenSSL incrustada.
+
 La aplicación, la imagen y las recetas de instalación comparten la versión de
 [`VERSION`](VERSION). Mientras `1.0.2` no se haya publicado, las correcciones de
 su candidata conservan ese número y obligan a reconstruir y repetir todas las

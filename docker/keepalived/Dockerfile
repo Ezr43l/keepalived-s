@@ -5,10 +5,21 @@
 # toca nada.
 # syntax=docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
 
-ARG PYTHON_IMAGE=python:3.12-alpine@sha256:b658b05ce9c4eb97ec6fc19424818a1f31993659c2b505a532f470e83807815d
-ARG FIP_APP_VERSION=1.0.8
+ARG PYTHON_IMAGE=python:3.12.16-alpine3.24@sha256:c5ba3deef00c7758561a0f03c26f44f10589263d40e732b8748e0d1f38f6dd89
+ARG FIP_APP_VERSION=1.0.9
 
-FROM ${PYTHON_IMAGE} AS runtime-base
+FROM ${PYTHON_IMAGE} AS security-builder
+COPY docker/security /security
+RUN sh /security/build-runtime.sh
+
+FROM ${PYTHON_IMAGE} AS security-python
+RUN apk upgrade --no-cache && apk add --no-cache libexpat=2.10.0-r0
+COPY --from=security-builder /out-runtime/ /
+COPY --from=security-builder /wheels /tmp/security-wheels
+COPY docker/security/install-python.py /tmp/install-python.py
+RUN python3 -c 'import sys,pyexpat;assert sys.version_info[:3] == (3,12,16);assert pyexpat.version_info >= (2,10,0)'
+
+FROM security-python AS runtime-base
 
 ARG FIP_APP_VERSION
 ARG BUILD_DATE=""
@@ -41,8 +52,7 @@ RUN apk add --no-cache \
       | grep -Fx 'c:3ee752ad0c8445c8105177cd5cebdd730789bcd8'
 COPY docker/keepalived/requirements.txt /tmp/requirements.txt
 RUN python3 -m pip install --no-cache-dir --upgrade pip==26.2.2 \
-    && python3 -m pip install --no-cache-dir --only-binary=:all: --require-hashes \
-      --requirement /tmp/requirements.txt \
+    && python3 /tmp/install-python.py /tmp/requirements.txt --require-hashes \
     && python3 -m pip uninstall --yes pip
 
 # Las imágenes Alpine no conservan necesariamente los textos de licencia de

@@ -43,3 +43,9 @@ aceptar silenciosamente una reconstrucción distinta con el mismo nombre. Para e
 resto del inventario exacto se deben consultar los SBOM y el digest inmutable de
 la imagen. Los avisos, autores y condiciones de cada componente siguen
 perteneciendo a sus respectivos titulares.
+
+## Correcciones de seguridad de las bibliotecas
+
+OpenSSL 3.5.9 incorpora los cinco parches oficiales publicados el 10 de noviembre de 2026. Los parches, sus huellas y la licencia Apache-2.0 se conservan en /usr/share/licenses/security-runtime dentro de la imagen. Expat 2.10.0 procede de Alpine y Python utiliza esa biblioteca del sistema.
+
+cryptography 50.0.2 se compila desde su fuente verificada y enlaza con el OpenSSL corregido del sistema; no incluye una segunda copia estática. Su licencia original y sus metadatos se conservan.
