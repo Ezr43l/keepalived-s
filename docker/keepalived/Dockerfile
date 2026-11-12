@@ -13,7 +13,7 @@ COPY docker/security /security
 RUN sh /security/build-runtime.sh
 
 FROM ${PYTHON_IMAGE} AS security-python
-RUN apk upgrade --no-cache && apk add --no-cache libexpat=2.10.0-r0
+RUN apk upgrade --no-cache && apk add --no-cache libexpat=2.10.0-r0 libgcc=15.2.0-r5
 COPY --from=security-builder /out-runtime/ /
 COPY --from=security-builder /wheels /tmp/security-wheels
 COPY docker/security/install-python.py /tmp/install-python.py
